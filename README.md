@@ -1,32 +1,7 @@
-# 🦜️🔗 LangChain {partner}
+# 🦜️🔗 LangChain Sema4
 
-This repository contains {n} packages with {partner} integrations with LangChain:
+This repository contains 1 package with Sema4 integrations with LangChain:
 
-- [langchain-{package}](https://pypi.org/project/langchain-{package}/) integrates [{product}}]({product_link}).
-{- ... if more packages}
+- [langchain-sema4](https://pypi.org/project/langchain-sema4/) integrates [Sema4.ai](https://sema4.ai/).
 
-## Initial Repo Checklist (Remove this section after completing)
-
-This setup assumes that the partner package is already split. For those instructions,
-see [these docs](https://python.langchain.com/docs/contributing/integrations#partner-packages).
-
-In github
-
-- [ ] Add integration testing secrets in Github (ask Erick for help)
-- [ ] Add partner collaborators in Github (ask Erick for help)
-- [ ] "Allow auto-merge" in General Settings 
-- [ ] Only "Allow squash merging" in General Settings
-- [ ] Set up ruleset matching CI build (ask Erick for help)
-    - name: ci build
-    - enforcement: active
-    - bypass: write
-    - target: default branch
-    - rules: restrict deletions, require status checks ("CI Success"), block force pushes
-
-Pypi
-
-- [ ] Add new repo to test-pypi and pypi trusted publishing (ask Erick for help)
-
-Slack
-
-- [ ] Set up release alerting in Slack (ask Erick for help)
+Note this package used to be called `langchain-robocorp`. Sema4 acquired robocorp and the package was renamed to `langchain-sema4`.
