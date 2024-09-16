@@ -90,36 +90,26 @@ Strictly adhere to the schema."""
 
         assert set(params["properties"].keys()) == {"sheet", "rows_to_add"}
 
-        desc = "The columns that make up the row"
         expected = {
-            "description": "the rows to be added to the sheet",
-            "allOf": [
-                {
-                    "title": "Rows To Add",
-                    "type": "object",
-                    "properties": {
-                        "rows": {
-                            "title": "Rows",
-                            "description": "The rows that need to be added",
-                            "type": "array",
-                            "items": {
-                                "title": "Row",
-                                "type": "object",
-                                "properties": {
-                                    "columns": {
-                                        "title": "Columns",
-                                        "description": desc,
-                                        "type": "array",
-                                        "items": {"type": "string"},
-                                    }
-                                },
-                                "required": ["columns"],
-                            },
-                        }
+            "properties": {
+                "rows": {
+                    "description": "The rows that need to be added",
+                    "items": {
+                        "properties": {
+                            "columns": {
+                                "description": "The columns that make up the row",
+                                "items": {"type": "string"},
+                                "type": "array",
+                            }
+                        },
+                        "required": ["columns"],
+                        "type": "object",
                     },
-                    "required": ["rows"],
+                    "type": "array",
                 }
-            ],
+            },
+            "required": ["rows"],
+            "type": "object",
         }
         assert params["properties"]["rows_to_add"] == expected
 

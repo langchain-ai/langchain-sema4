@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "langchain-sema4"
-version = "0.1.0"
+version = "0.2.0"
 description = "An integration package connecting Sema4 and LangChain"
 authors = []
 readme = "README.md"
@@ -11,10 +11,9 @@ license = "MIT"
 "Source Code" = "https://github.com/langchain-ai/langchain-sema4/tree/main/libs/sema4"
 
 [tool.poetry.dependencies]
-python = ">=3.8.1,<4.0"
-langchain-core = ">=0.1.52,<0.3"
+python = ">=3.9,<4.0"
+langchain-core = "^0.3"
 requests = "^2.31.0"
-types-requests = "^2.31.0.6"
 
 [tool.poetry.group.test]
 optional = true
@@ -48,6 +47,7 @@ ruff = "^0.1.5"
 [tool.poetry.group.typing.dependencies]
 mypy = "^0.991"
 langchain-core = { git = "https://github.com/langchain-ai/langchain.git", subdirectory = "libs/core" }
+types-requests = "^2.31.0.6"
 
 [tool.poetry.group.dev]
 optional = true
