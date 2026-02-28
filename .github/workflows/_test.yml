@@ -13,6 +13,8 @@ env:
 
 jobs:
   build:
+    permissions:
+      contents: read
     defaults:
       run:
         working-directory: ${{ inputs.working-directory }}
