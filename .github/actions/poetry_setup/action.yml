@@ -76,8 +76,11 @@ runs:
         POETRY_VERSION: ${{ inputs.poetry-version }}
         PYTHON_VERSION: ${{ inputs.python-version }}
         PIPX_DEFAULT_PYTHON: ${{ steps.setup-python.outputs.python-path }}
+        PIPX_HOME: /opt/pipx
       # Install poetry using the python version installed by setup-python step.
-      run: pipx install "poetry==$POETRY_VERSION" --python '${{ steps.setup-python.outputs.python-path }}' --verbose
+      run: |
+        rm -rf -- /opt/pipx/shared
+        pipx install "poetry==$POETRY_VERSION" --python '${{ steps.setup-python.outputs.python-path }}' --verbose
 
     - name: Restore pip and poetry cached dependencies
       uses: actions/cache@v4
