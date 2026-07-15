@@ -31,7 +31,7 @@ jobs:
       version: ${{ steps.check-version.outputs.version }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Python + Poetry ${{ env.POETRY_VERSION }}
         uses: "./.github/actions/poetry_setup"
@@ -57,7 +57,7 @@ jobs:
         working-directory: ${{ inputs.working-directory }}
 
       - name: Upload build
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: dist
           path: ${{ inputs.working-directory }}/dist/
@@ -86,7 +86,7 @@ jobs:
       - test-pypi-publish
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # We explicitly *don't* set up caching here. This ensures our tests are
       # maximally sensitive to catching breakage.
@@ -201,7 +201,7 @@ jobs:
         working-directory: ${{ inputs.working-directory }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Python + Poetry ${{ env.POETRY_VERSION }}
         uses: "./.github/actions/poetry_setup"
@@ -211,7 +211,7 @@ jobs:
           working-directory: ${{ inputs.working-directory }}
           cache-key: release
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: dist
           path: ${{ inputs.working-directory }}/dist/
@@ -242,7 +242,7 @@ jobs:
         working-directory: ${{ inputs.working-directory }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Python + Poetry ${{ env.POETRY_VERSION }}
         uses: "./.github/actions/poetry_setup"
@@ -252,7 +252,7 @@ jobs:
           working-directory: ${{ inputs.working-directory }}
           cache-key: releaseartifact@v4
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: dist
           path: ${{ inputs.working-directory }}/dist/
