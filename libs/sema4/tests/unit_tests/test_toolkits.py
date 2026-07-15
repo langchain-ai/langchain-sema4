@@ -91,6 +91,7 @@ Strictly adhere to the schema."""
         assert set(params["properties"].keys()) == {"sheet", "rows_to_add"}
 
         expected = {
+            "description": "the rows to be added to the sheet",
             "properties": {
                 "rows": {
                     "description": "The rows that need to be added",
