@@ -2,8 +2,11 @@
 
 import json
 from pathlib import Path
+from typing import Optional
 from unittest.mock import MagicMock, patch
 
+import pytest
+from langchain_core.callbacks.manager import CallbackManager
 from langchain_core.utils.function_calling import (
     convert_to_openai_function,
     convert_to_openai_tool,
@@ -16,10 +19,11 @@ from ._fixtures import FakeChatLLMT
 
 def test_initialization() -> None:
     """Test toolkit initialization."""
-    ActionServerToolkit(url="http://localhost", llm=FakeChatLLMT())
+    ActionServerToolkit(url="http://localhost")
 
 
-def test_get_tools_success() -> None:
+@pytest.mark.parametrize("llm", [None, FakeChatLLMT()])
+def test_get_tools_success(llm: Optional[FakeChatLLMT]) -> None:
     # Setup
     toolkit_instance = ActionServerToolkit(
         url="http://example.com", api_key="dummy_key"
@@ -27,9 +31,10 @@ def test_get_tools_success() -> None:
 
     fixture_path = Path(__file__).with_name("_openapi2.fixture.json")
 
-    with patch(
-        "langchain_sema4.toolkits.requests.get"
-    ) as mocked_get, fixture_path.open("r") as f:
+    with (
+        patch("langchain_sema4.toolkits.requests.get") as mocked_get,
+        fixture_path.open("r") as f,
+    ):
         data = json.load(f)  # Using json.load directly on the file object
         mocked_response = MagicMock()
         mocked_response.json.return_value = data
@@ -38,10 +43,14 @@ def test_get_tools_success() -> None:
         mocked_get.return_value = mocked_response
 
         # Execute
-        tools = toolkit_instance.get_tools()
+        callback_manager = CallbackManager([])
+        tools = toolkit_instance.get_tools(llm=llm, callback_manager=callback_manager)
 
         # Verify
         assert len(tools) == 5
+        assert all(tool.callbacks is callback_manager for tool in tools)
+        if llm is not None:
+            return
 
         tool = tools[2]
         assert tool.name == "add_sheet_rows"
@@ -55,9 +64,9 @@ Strictly adhere to the schema."""
 
         openai_func_spec = convert_to_openai_function(tool)
 
-        assert isinstance(
-            openai_func_spec, dict
-        ), "openai_func_spec should be a dictionary."
+        assert isinstance(openai_func_spec, dict), (
+            "openai_func_spec should be a dictionary."
+        )
         assert set(openai_func_spec.keys()) == {
             "description",
             "name",
@@ -67,9 +76,9 @@ Strictly adhere to the schema."""
         assert openai_func_spec["description"] == tool.description
         assert openai_func_spec["name"] == tool.name
 
-        assert isinstance(
-            openai_func_spec["parameters"], dict
-        ), "Parameters should be a dictionary."
+        assert isinstance(openai_func_spec["parameters"], dict), (
+            "Parameters should be a dictionary."
+        )
 
         params = openai_func_spec["parameters"]
         assert set(params.keys()) == {
@@ -78,9 +87,9 @@ Strictly adhere to the schema."""
             "required",
         }, "Parameters keys mismatch."
         assert params["type"] == "object", "`type` in parameters should be 'object'."
-        assert isinstance(
-            params["properties"], dict
-        ), "`properties` should be a dictionary."
+        assert isinstance(params["properties"], dict), (
+            "`properties` should be a dictionary."
+        )
         assert isinstance(params["required"], list), "`required` should be a list."
 
         assert set(params["required"]) == {
@@ -122,9 +131,10 @@ def test_get_tools_with_complex_inputs() -> None:
 
     fixture_path = Path(__file__).with_name("_openapi3.fixture.json")
 
-    with patch(
-        "langchain_sema4.toolkits.requests.get"
-    ) as mocked_get, fixture_path.open("r") as f:
+    with (
+        patch("langchain_sema4.toolkits.requests.get") as mocked_get,
+        fixture_path.open("r") as f,
+    ):
         data = json.load(f)  # Using json.load directly on the file object
         mocked_response = MagicMock()
         mocked_response.json.return_value = data
@@ -143,9 +153,9 @@ def test_get_tools_with_complex_inputs() -> None:
         all_tools_as_openai_tools = [convert_to_openai_tool(t) for t in tools]
         openai_tool_spec = all_tools_as_openai_tools[0]["function"]
 
-        assert isinstance(
-            openai_tool_spec, dict
-        ), "openai_func_spec should be a dictionary."
+        assert isinstance(openai_tool_spec, dict), (
+            "openai_func_spec should be a dictionary."
+        )
         assert set(openai_tool_spec.keys()) == {
             "description",
             "name",
@@ -155,9 +165,9 @@ def test_get_tools_with_complex_inputs() -> None:
         assert openai_tool_spec["description"] == tool.description
         assert openai_tool_spec["name"] == tool.name
 
-        assert isinstance(
-            openai_tool_spec["parameters"], dict
-        ), "Parameters should be a dictionary."
+        assert isinstance(openai_tool_spec["parameters"], dict), (
+            "Parameters should be a dictionary."
+        )
 
         params = openai_tool_spec["parameters"]
         assert set(params.keys()) == {
@@ -166,9 +176,9 @@ def test_get_tools_with_complex_inputs() -> None:
             "required",
         }, "Parameters keys mismatch."
         assert params["type"] == "object", "`type` in parameters should be 'object'."
-        assert isinstance(
-            params["properties"], dict
-        ), "`properties` should be a dictionary."
+        assert isinstance(params["properties"], dict), (
+            "`properties` should be a dictionary."
+        )
         assert isinstance(params["required"], list), "`required` should be a list."
 
         assert set(params["required"]) == {
