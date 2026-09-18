@@ -66,7 +66,7 @@ class ToolArgs(TypedDict):
 
     name: str
     description: str
-    callback_manager: CallbackManager
+    callbacks: CallbackManager
 
 
 class ActionServerRequestTool(BaseTool):
@@ -161,7 +161,7 @@ class ActionServerToolkit(BaseModel):
             tool_args: ToolArgs = {
                 "name": docs["operationId"],
                 "description": docs["description"],
-                "callback_manager": callback_manager,
+                "callbacks": callback_manager,
             }
 
             if llm:
