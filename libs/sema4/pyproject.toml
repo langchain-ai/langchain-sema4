@@ -46,7 +46,7 @@ optional = true
 ruff = ">=0.1.5,<0.17.0"
 
 [tool.poetry.group.typing.dependencies]
-mypy = ">=0.991,<2.4"
+mypy = ">=0.991,<2.5"
 langchain-core = "^1.4.9"
 types-requests = "^2.32.4.20260107"
 
