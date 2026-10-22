@@ -13,8 +13,8 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
 langchain-core = "^1.4.9"
-requests = "^2.34.2"
-urllib3 = "^2.7.0"
+requests = ">=2.34.2"
+urllib3 = ">=2.7.0"
 
 [tool.poetry.group.test]
 optional = true
