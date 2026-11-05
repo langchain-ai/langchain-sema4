@@ -476,27 +476,28 @@ files = [
 
 [[package]]
 name = "langchain-core"
-version = "1.7.0"
+version = "1.7.3"
 description = "Building applications with LLMs through composability"
 optional = false
 python-versions = "<4.0.0,>=3.10.0"
 groups = ["main", "dev", "test", "typing"]
 files = [
-    {file = "langchain_core-1.7.0-py3-none-any.whl", hash = "sha256:e82b24d7ac51fc74874baa29d6b3c0b8234880d4f3d897f8ff57fb80dfd9b07d"},
-    {file = "langchain_core-1.7.0.tar.gz", hash = "sha256:c34e53358b103cd73f43c63f5f46f9b5c6c3467efdffcdf134892b89020494e4"},
+    {file = "langchain_core-1.7.3-py3-none-any.whl", hash = "sha256:460c214bf31495d7b7e0a879e408dbfda677fd53fd879da786c1b966a4f6bff6"},
+    {file = "langchain_core-1.7.3.tar.gz", hash = "sha256:77f70b81e238c981bfd8405840b03fdf143735ac93c0729c2bdb39d6f0648024"},
 ]
 
 [package.dependencies]
-httpx = ">=0.23.0,<1.0.0"
-jsonpatch = ">=1.33.0,<2.0.0"
+certifi = ">=2026.10.19"
+httpx = ">=0.23.0"
+jsonpatch = ">=1.33.0"
 langchain-protocol = ">=0.0.20"
 langsmith = ">=0.14.9,<1.0.0"
 packaging = ">=23.2.0"
 pydantic = ">=2.7.4,<3.0.0"
-pyyaml = ">=5.3.0,<7.0.0"
-tenacity = ">=8.1.0,!=8.4.0,<10.0.0"
-typing-extensions = ">=4.7.0,<5.0.0"
-uuid-utils = ">=0.12.0,<1.0"
+pyyaml = ">=5.3.0"
+tenacity = ">=8.1.0,!=8.4.0"
+typing-extensions = ">=4.7.0"
+uuid-utils = ">=0.12.0"
 
 [[package]]
 name = "langchain-protocol"
